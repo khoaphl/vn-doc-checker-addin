@@ -1,6 +1,120 @@
 window.PCDT = window.PCDT || {};
 
 (function (PCDT) {
+  const W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+
+  function isBulletTextPrefix(text) {
+    return /^\s*[-–+•](?:\t|\s+)/.test(text || "");
+  }
+
+  function isNumberedListString(listStr) {
+    return /[0-9a-zA-Z]/.test(listStr || "");
+  }
+
+  function cmToTwips(cm) {
+    return Math.round(cm * 566.929);
+  }
+
+  function updateParagraphOoxmlForBullet(ooxmlStr, indentCm, addDashTabPrefix) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(ooxmlStr, "application/xml");
+    if (xmlDoc.getElementsByTagName("parsererror").length > 0) return null;
+
+    const pNodes = xmlDoc.getElementsByTagNameNS(W_NS, "p");
+    if (!pNodes || pNodes.length === 0) return null;
+    const pNode = pNodes[0];
+
+    let pPr = null;
+    for (let i = 0; i < pNode.childNodes.length; i++) {
+      if (pNode.childNodes[i].localName === "pPr" && pNode.childNodes[i].namespaceURI === W_NS) {
+        pPr = pNode.childNodes[i];
+        break;
+      }
+    }
+    if (!pPr) {
+      pPr = xmlDoc.createElementNS(W_NS, "w:pPr");
+      pNode.insertBefore(pPr, pNode.firstChild);
+    }
+
+    // Xóa numPr nếu còn sót
+    const numPrList = pPr.getElementsByTagNameNS(W_NS, "numPr");
+    while (numPrList.length > 0) {
+      numPrList[0].parentNode.removeChild(numPrList[0]);
+    }
+
+    // Đặt Left = 0 cm, First line = indentCm (1 cm = 567 twips, 1.27 cm = 720 twips)
+    const oldInd = pPr.getElementsByTagNameNS(W_NS, "ind");
+    while (oldInd.length > 0) {
+      oldInd[0].parentNode.removeChild(oldInd[0]);
+    }
+    const indEl = xmlDoc.createElementNS(W_NS, "w:ind");
+    indEl.setAttributeNS(W_NS, "w:left", "0");
+    indEl.setAttributeNS(W_NS, "w:firstLine", String(cmToTwips(indentCm)));
+    pPr.appendChild(indEl);
+
+    // Đặt Tab stop = (indentCm + 0.5) cm (VD: 1 cm -> 1.5 cm = 850 twips)
+    const oldTabs = pPr.getElementsByTagNameNS(W_NS, "tabs");
+    while (oldTabs.length > 0) {
+      oldTabs[0].parentNode.removeChild(oldTabs[0]);
+    }
+    const tabsEl = xmlDoc.createElementNS(W_NS, "w:tabs");
+    const tabEl = xmlDoc.createElementNS(W_NS, "w:tab");
+    tabEl.setAttributeNS(W_NS, "w:val", "left");
+    tabEl.setAttributeNS(W_NS, "w:pos", String(cmToTwips(indentCm + 0.5)));
+    tabsEl.appendChild(tabEl);
+    pPr.appendChild(tabsEl);
+
+    // Chuẩn hóa đầu dòng thành "-<tab>" nếu vừa tách từ Word Auto Bullet hoặc đang dùng "-   "
+    if (addDashTabPrefix) {
+      const rNodes = pNode.getElementsByTagNameNS(W_NS, "r");
+      const firstRPr = rNodes.length > 0 ? rNodes[0].getElementsByTagNameNS(W_NS, "rPr")[0] : null;
+
+      const dashRun = xmlDoc.createElementNS(W_NS, "w:r");
+      if (firstRPr) dashRun.appendChild(firstRPr.cloneNode(true));
+      const dashText = xmlDoc.createElementNS(W_NS, "w:t");
+      dashText.textContent = "-";
+      dashRun.appendChild(dashText);
+
+      const tabRun = xmlDoc.createElementNS(W_NS, "w:r");
+      if (firstRPr) tabRun.appendChild(firstRPr.cloneNode(true));
+      tabRun.appendChild(xmlDoc.createElementNS(W_NS, "w:tab"));
+
+      const refNode = pPr.nextSibling;
+      pNode.insertBefore(tabRun, refNode);
+      pNode.insertBefore(dashRun, tabRun);
+    } else {
+      // Nếu là dòng gõ tay "- Nội dung" (dùng space thay vì tab), chuyển khoảng trắng đầu sau dấu "-" thành <w:tab/>
+      const tNodes = pNode.getElementsByTagNameNS(W_NS, "t");
+      if (tNodes.length > 0) {
+        const firstT = tNodes[0];
+        const rawVal = firstT.textContent || "";
+        const m = rawVal.match(/^\s*([-–+•])(\s+)(.*)$/);
+        if (m) {
+          firstT.textContent = "-";
+          const parentRun = firstT.parentNode;
+          const rPr = parentRun.getElementsByTagNameNS(W_NS, "rPr")[0];
+
+          const tabRun = xmlDoc.createElementNS(W_NS, "w:r");
+          if (rPr) tabRun.appendChild(rPr.cloneNode(true));
+          tabRun.appendChild(xmlDoc.createElementNS(W_NS, "w:tab"));
+
+          const restRun = xmlDoc.createElementNS(W_NS, "w:r");
+          if (rPr) restRun.appendChild(rPr.cloneNode(true));
+          const restT = xmlDoc.createElementNS(W_NS, "w:t");
+          restT.setAttribute("xml:space", "preserve");
+          restT.textContent = m[3];
+          restRun.appendChild(restT);
+
+          const nextSib = parentRun.nextSibling;
+          pNode.insertBefore(tabRun, nextSib);
+          if (m[3]) pNode.insertBefore(restRun, nextSib);
+        }
+      }
+    }
+
+    return new XMLSerializer().serializeToString(xmlDoc);
+  }
+
   function isBodyContentParagraph(p, inTable) {
     if (inTable) return false;
     const text = (p.text || "").replace(/[\v\u000b\r]/g, " ").trim();
@@ -146,14 +260,18 @@ window.PCDT = window.PCDT || {};
               wrongAlignCount++;
             }
             // Thụt đầu dòng chuẩn 1cm (~28.35pt) hoặc 1.27cm (~36pt), dung sai ±2.5pt
-            // Với đoạn có Bullets/Numbering (isListItem), vị trí đầu dòng là (leftIndent + firstLineIndent)
-            const effectiveIndent = p.isListItem
-              ? (p.leftIndent || 0) + (p.firstLineIndent || 0)
-              : (p.firstLineIndent || 0);
-            const ok1cm = Math.abs(effectiveIndent - 28.35) <= 2.5;
-            const ok127cm = Math.abs(effectiveIndent - 36.0) <= 2.5;
-            if (!ok1cm && !ok127cm) {
+            // Theo mẫu PCĐT: cả đoạn thường và đoạn Bullets đều dùng Left = 0 cm, First line = 1 cm (hoặc 1,27 cm)
+            if (p.isListItem) {
               wrongIndentCount++;
+            } else {
+              const leftPt = p.leftIndent || 0;
+              const indent = p.firstLineIndent || 0;
+              const okLeft0 = Math.abs(leftPt) <= 2.5;
+              const ok1cm = Math.abs(indent - 28.35) <= 2.5;
+              const ok127cm = Math.abs(indent - 36.0) <= 2.5;
+              if (!okLeft0 || (!ok1cm && !ok127cm)) {
+                wrongIndentCount++;
+              }
             }
             // Cách đoạn đồng bộ Before & After với mức chuẩn đang lưu/chọn & giãn dòng 1.0 - 1.5 lines
             const spaceAfter = p.spaceAfter || 0;
@@ -209,7 +327,8 @@ window.PCDT = window.PCDT || {};
         if (findings.length === 0) {
           listDiv.innerHTML = `<div style="color:#15803d; font-weight:600; padding:6px 0;">✅ Tuyệt vời! Văn bản đã đạt đầy đủ các tiêu chuẩn kỹ thuật NĐ 30/2020/NĐ-CP (Cách đoạn Before & After = ${targetSpace} pt).</div>`;
           optionsBox.style.display = "block";
-          confirmBtn.style.display = "none";
+          confirmBtn.textContent = "🔄 Áp dụng theo thông số đang chọn";
+          confirmBtn.style.display = "block";
           PCDT.setStatus("Kiểm tra kỹ thuật hoàn tất: Văn bản đã đạt chuẩn NĐ 30.");
         } else {
           findings.forEach((f) => {
@@ -225,6 +344,7 @@ window.PCDT = window.PCDT || {};
             listDiv.appendChild(itemDiv);
           });
           optionsBox.style.display = "block";
+          confirmBtn.textContent = "✅ Xác nhận chuẩn hóa";
           confirmBtn.style.display = "block";
           PCDT.setStatus(`Phát hiện ${findings.length} thành phần cần chuẩn hóa theo NĐ 30. Hãy tích chọn và bấm Xác nhận.`);
         }
@@ -235,8 +355,15 @@ window.PCDT = window.PCDT || {};
   }
 
   async function applySelectedFormatND30() {
-    const checkedIds = Array.from(document.querySelectorAll(".fmt-checkbox:checked")).map((cb) => cb.value);
-    if (checkedIds.length === 0) return alert("Vui lòng tích chọn ít nhất 1 thành phần để chuẩn hóa.");
+    const allCheckboxes = document.querySelectorAll(".fmt-checkbox");
+    let checkedIds = [];
+    if (allCheckboxes.length === 0) {
+      // Văn bản đã đạt chuẩn nhưng người dùng thay đổi 8 thông số và bấm "Áp dụng theo thông số đang chọn"
+      checkedIds = ["fmt_paper", "fmt_margin", "fmt_font", "fmt_size", "fmt_align", "fmt_indent", "fmt_spacing"];
+    } else {
+      checkedIds = Array.from(document.querySelectorAll(".fmt-checkbox:checked")).map((cb) => cb.value);
+      if (checkedIds.length === 0) return alert("Vui lòng tích chọn ít nhất 1 thành phần để chuẩn hóa.");
+    }
 
     const cfg = readND30SettingsFromUI();
     PCDT.setStatus("Đang áp dụng chuẩn hóa các mục đã chọn...");
@@ -297,12 +424,15 @@ window.PCDT = window.PCDT || {};
           await context.sync();
 
           paragraphs.items.forEach((p) => {
-            p.load("text, alignment, isListItem, parentTableOrNullObject/isNullObject");
+            p.load("text, alignment, isListItem, listItemOrNullObject/listString, parentTableOrNullObject/isNullObject");
           });
           await context.sync();
 
           // Trong Word (Office.js), chế độ giãn dòng Multiple quy ước 1.0 line = 12 pt
           const lineSpacingPt = Math.round(12 * cfg.lineSpacing * 10) / 10;
+          const targetIndentPt = PCDT.cmToPt(cfg.indent);
+          const bulletUpdateQueue = [];
+
           paragraphs.items.forEach((p) => {
             const inTable = p.parentTableOrNullObject && !p.parentTableOrNullObject.isNullObject;
             if (!isBodyContentParagraph(p, inTable)) return;
@@ -316,23 +446,58 @@ window.PCDT = window.PCDT || {};
             if (checkedIds.includes("fmt_align")) {
               p.alignment = Word.Alignment.justified;
             }
-            if (checkedIds.includes("fmt_indent")) {
-              const targetIndentPt = PCDT.cmToPt(cfg.indent);
-              if (p.isListItem) {
-                // Đoạn có Bullets/Numbering dùng leftIndent + hanging (-18pt) để dấu đầu dòng nằm đúng vị trí 1cm/1.27cm
-                const hangingPt = 18;
-                p.leftIndent = targetIndentPt + hangingPt;
-                p.firstLineIndent = -hangingPt;
-              } else {
-                p.firstLineIndent = targetIndentPt;
-              }
-            }
             if (checkedIds.includes("fmt_spacing")) {
               p.spaceBefore = cfg.spaceBeforeAfter;
               p.spaceAfter = cfg.spaceBeforeAfter;
               p.lineSpacing = lineSpacingPt;
             }
+            if (checkedIds.includes("fmt_indent")) {
+              const listStr =
+                p.listItemOrNullObject && !p.listItemOrNullObject.isNullObject
+                  ? p.listItemOrNullObject.listString
+                  : "";
+              const isAutoBullet = p.isListItem && !isNumberedListString(listStr);
+              const isManualBullet = !p.isListItem && isBulletTextPrefix(p.text);
+
+              if (isAutoBullet) {
+                if (typeof p.detachFromList === "function") p.detachFromList();
+                p.leftIndent = 0;
+                p.firstLineIndent = targetIndentPt;
+                bulletUpdateQueue.push({ p, addDashTabPrefix: true });
+              } else if (isManualBullet) {
+                p.leftIndent = 0;
+                p.firstLineIndent = targetIndentPt;
+                bulletUpdateQueue.push({ p, addDashTabPrefix: false });
+              } else if (!p.isListItem) {
+                p.leftIndent = 0;
+                p.firstLineIndent = targetIndentPt;
+              }
+            }
           });
+
+          await context.sync();
+
+          // Chèn Tab stop = (cfg.indent + 0.5) cm qua OOXML cho các đoạn có Bullets (giữ nguyên định dạng chữ)
+          if (bulletUpdateQueue.length > 0) {
+            const ooxmlResults = bulletUpdateQueue.map((item) => ({
+              item,
+              ooxml: item.p.getRange().getOoxml()
+            }));
+            await context.sync();
+
+            ooxmlResults.forEach(({ item, ooxml }) => {
+              try {
+                const updated = updateParagraphOoxmlForBullet(
+                  ooxml.value,
+                  cfg.indent,
+                  item.addDashTabPrefix
+                );
+                if (updated) {
+                  item.p.getRange().insertOoxml(updated, Word.InsertLocation.replace);
+                }
+              } catch (e) {}
+            });
+          }
         }
 
         await context.sync();

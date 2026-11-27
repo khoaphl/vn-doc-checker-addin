@@ -14,66 +14,238 @@
     })();
   </script>
   <style>
-    body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 14px; background: #f8f9fa; color: #222; font-size: 13px; }
-    h2 { margin: 0 0 10px; font-size: 16px; color: #164397; }
-    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-    input[type="password"], input[type="text"], select { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 6px; background: #fff; font-size: 13px; }
-    button { width: 100%; padding: 9px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 8px; }
-    .btn-primary { background: #164397; color: #fff; }
-    .btn-primary:hover { background: #103275; }
+    :root {
+      --color-primary: #164397;
+      --color-primary-hover: #103275;
+      --color-primary-soft: #eff6ff;
+      --color-success: #059669;
+      --color-success-hover: #047857;
+      --color-success-soft: #ecfdf5;
+      --color-warning: #d97706;
+      --color-warning-soft: #fffbeb;
+      --color-danger: #dc2626;
+      --color-danger-soft: #fef2f2;
+      --color-bg: #f8fafc;
+      --color-card: #ffffff;
+      --color-border: #e2e8f0;
+      --color-text: #0f172a;
+      --color-muted: #475569;
+      --radius: 8px;
+      --transition: 150ms ease;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 12px;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    /* Compact Header */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .app-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--color-primary);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .app-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .app-subtitle {
+      font-size: 11px;
+      color: var(--color-muted);
+      margin: 0;
+    }
+    .conn-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .conn-online { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .conn-offline { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+
+    /* Cards & Form Controls */
+    .card {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+    input[type="password"], input[type="text"], select {
+      width: 100%;
+      padding: 7px 9px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      margin-top: 5px;
+      background: #fff;
+      color: var(--color-text);
+      font-size: 12.5px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    input:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 1px;
+    }
+
+    button {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12.5px;
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background-color var(--transition), border-color var(--transition), color var(--transition);
+    }
+    button svg { flex-shrink: 0; }
+
+    .btn-primary { background: var(--color-primary); color: #fff; }
+    .btn-primary:hover { background: var(--color-primary-hover); }
     .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
-    .btn-format { background: #059669; color: #fff; }
-    .btn-format:hover { background: #047857; }
-    .btn-secondary { background: #e2e8f0; color: #1e293b; }
-    .btn-secondary:hover { background: #cbd5e1; }
-    .btn-group { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
-    .btn-locate { background: #2563eb; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
-    .btn-locate:hover { background: #1d4ed8; }
-    .btn-recheck { background: #7c3aed; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
-    .btn-recheck:hover { background: #6d28d9; }
-    .btn-comment { background: #0f766e; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
-    .btn-fix { background: #d97706; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
-    .btn-fix:hover { background: #b45309; }
-    .btn-ignore { background: #e2e8f0; color: #475569; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
-    .btn-ignore:hover { background: #cbd5e1; color: #0f172a; }
-    .btn-small-danger { background: #fee2e2; color: #991b1b; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 6px; }
-    .btn-small-info { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 6px 10px; font-size: 12px; width: 100%; margin-top: 8px; }
+
+    .btn-format { background: var(--color-success); color: #fff; }
+    .btn-format:hover { background: var(--color-success-hover); }
+
+    .btn-secondary { background: #f1f5f9; color: #1e293b; border-color: #cbd5e1; }
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .btn-small-danger { background: var(--color-danger-soft); color: #991b1b; border-color: #fecaca; padding: 5px 8px; font-size: 11.5px; width: auto; margin-top: 6px; }
+    .btn-small-danger:hover { background: #fee2e2; }
+
+    .btn-small-info { background: var(--color-primary-soft); color: var(--color-primary); border-color: #bfdbfe; padding: 6px 10px; font-size: 12px; margin-top: 8px; }
     .btn-small-info:hover { background: #dbeafe; }
 
-    .rules-status { font-size: 12px; color: #0f766e; margin-top: 6px; }
-    .hint { font-size: 11.5px; color: #475569; margin-top: 6px; line-height: 1.4; }
-    #status { font-size: 12px; color: #1e3a8a; margin-top: 8px; font-weight: 500; }
+    /* Soft-tinted Action Pills on Issue Cards */
+    .btn-group { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+    .btn-group button { width: auto; margin-top: 0; padding: 4px 8px; font-size: 11.5px; border-radius: 5px; }
+    .btn-locate { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .btn-locate:hover { background: #dbeafe; }
+    .btn-recheck { background: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+    .btn-recheck:hover { background: #ede9fe; }
+    .btn-comment { background: #f0fdfa; color: #0f766e; border-color: #99f6e4; }
+    .btn-comment:hover { background: #ccfbf1; }
+    .btn-fix { background: #d97706; color: #fff; }
+    .btn-fix:hover { background: #b45309; }
+    .btn-ignore { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+    .btn-ignore:hover { background: #e2e8f0; color: #0f172a; }
+
+    /* Collapsible Settings Accordion */
+    .settings-accordion {
+      background: var(--color-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+    }
+    .settings-summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+    .settings-summary::-webkit-details-marker { display: none; }
+    .settings-summary-left { display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary); }
+    .settings-chevron { transition: transform var(--transition); color: var(--color-muted); }
+    .settings-accordion[open] .settings-chevron { transform: rotate(180deg); }
+    .settings-body { padding: 0 12px 12px; border-top: 1px solid var(--color-border); }
+    .settings-section { padding-top: 10px; margin-top: 10px; border-top: 1px dashed var(--color-border); }
+    .settings-section:first-child { border-top: none; margin-top: 0; }
+
+    .rules-status { font-size: 11.5px; color: #0f766e; margin-top: 6px; }
+    .hint { font-size: 11.5px; color: var(--color-muted); margin-top: 5px; line-height: 1.4; }
+    #status { font-size: 12px; color: var(--color-primary); margin-top: 8px; font-weight: 600; }
 
     .mode-badge { display: none; margin-bottom: 10px; padding: 8px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; line-height: 1.4; }
     .mode-offline { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
 
+    /* Step Progress Pills */
     .steps-bar { display: flex; gap: 4px; margin-top: 8px; }
-    .step-pill { flex: 1; text-align: center; font-size: 11px; padding: 4px 2px; border-radius: 4px; background: #e2e8f0; color: #64748b; font-weight: 600; }
-    .step-pill.active { background: #dbeafe; color: #1d4ed8; }
-    .step-pill.done { background: #dcfce7; color: #15803d; }
+    .step-pill { flex: 1; text-align: center; font-size: 11px; padding: 4px 2px; border-radius: 5px; background: #f1f5f9; color: #64748b; font-weight: 600; border: 1px solid var(--color-border); }
+    .step-pill.active { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+    .step-pill.done { background: #dcfce7; color: #15803d; border-color: #86efac; }
 
-    .result-group { margin-bottom: 14px; }
-    .group-header { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 6px; font-weight: 700; font-size: 12.5px; margin-bottom: 8px; }
-    .group-tech { background: #fef3c7; color: #92400e; }
-    .group-spell { background: #fee2e2; color: #991b1b; }
-    .group-valid { background: #e0e7ff; color: #3730a3; }
-    .group-count { background: rgba(255,255,255,0.8); padding: 1px 7px; border-radius: 10px; font-size: 11px; }
+    /* Results & Collapsible Groups */
+    .result-group { margin-bottom: 12px; }
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .group-tech { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .group-spell { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    .group-valid { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .group-count { background: rgba(255,255,255,0.85); padding: 1px 8px; border-radius: 999px; font-size: 11px; }
 
-    .issue-item { border-left: 3px solid #cbd5e1; padding-left: 10px; margin-bottom: 10px; }
+    .issue-item { border-left: 3px solid #cbd5e1; padding: 10px 10px 10px 11px; margin-bottom: 8px; }
     .issue-fixed { border-left: 3px solid #16a34a !important; background: #f0fdf4 !important; opacity: 0.85; }
-    .quote { background: #f1f5f9; padding: 4px 6px; border-radius: 4px; font-style: italic; display: block; margin: 4px 0; }
+    .quote { background: #f1f5f9; padding: 4px 7px; border-radius: 4px; font-style: italic; display: block; margin: 0 0 6px; font-size: 12px; color: #334155; }
     .recheck-msg { font-size: 11.5px; margin-top: 6px; font-weight: 600; }
 
     .ignore-box { margin-top: 8px; padding: 8px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; }
     .ignore-box-title { font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 6px; }
     .ignore-reason-area { margin-top: 6px; }
 
-    .restore-bar { display: none; justify-content: space-between; align-items: center; background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 12px; color: #92400e; }
+    .restore-bar { display: none; justify-content: space-between; align-items: center; background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 7px 10px; margin-bottom: 10px; font-size: 12px; color: #92400e; }
     .restore-bar button { width: auto; margin-top: 0; padding: 4px 8px; font-size: 11.5px; background: #f59e0b; color: #fff; }
     .restore-bar button:hover { background: #d97706; }
 
-    .global-panel { display: none; margin-top: 8px; border-top: 1px solid #e2e8f0; padding-top: 8px; }
-    .global-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; margin-bottom: 6px; font-size: 12px; }
+    .global-panel { display: none; margin-top: 8px; border-top: 1px solid var(--color-border); padding-top: 8px; }
+    .global-item { background: #f8fafc; border: 1px solid var(--color-border); border-radius: 6px; padding: 8px; margin-bottom: 6px; font-size: 12px; }
     .global-item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
     .global-item-del { width: auto; margin-top: 0; padding: 2px 6px; font-size: 11px; background: #fee2e2; color: #991b1b; }
     .io-row { display: flex; gap: 6px; margin-top: 6px; }
@@ -86,60 +258,49 @@
     .dict-chips { display: flex; flex-wrap: wrap; gap: 5px; }
     .dict-chip { display: inline-flex; align-items: center; gap: 4px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; border-radius: 12px; padding: 2px 8px; font-size: 11.5px; }
     .dict-chip-del { width: auto; margin: 0; padding: 0 3px; background: transparent; color: #0369a1; font-size: 13px; line-height: 1; }
-    .dict-chip-del:hover { color: #dc2626; }
+    .dict-chip-del:hover { color: var(--color-danger); }
 
     /* Bảng Kiểm tra & Chuẩn hóa NĐ 30 */
-    .format-panel { display: none; border: 1px solid #a7f3d0; background: #f0fdf4; }
-    .format-panel h3 { margin: 0 0 8px; font-size: 13.5px; color: #065f46; }
+    .format-panel { display: none; border: 1px solid #a7f3d0; background: var(--color-success-soft); }
+    .format-panel h3 { margin: 0 0 8px; font-size: 13px; color: #065f46; display: flex; align-items: center; gap: 6px; }
     .format-check-item { display: flex; align-items: flex-start; gap: 8px; background: #fff; border: 1px solid #d1fae5; border-radius: 6px; padding: 7px 8px; margin-bottom: 6px; font-size: 12px; }
     .format-check-item input[type="checkbox"] { margin-top: 2px; cursor: pointer; }
-    .format-check-detail { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .format-check-detail { font-size: 11px; color: var(--color-muted); margin-top: 2px; }
     .format-options { background: #fff; border: 1px solid #d1fae5; border-radius: 6px; padding: 8px; margin-top: 8px; }
     .format-options-title { font-size: 12px; font-weight: 700; color: #065f46; margin-bottom: 6px; }
     .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .opt-field label { display: block; font-size: 11px; color: #475569; font-weight: 600; }
+    .opt-field label { display: block; font-size: 11px; color: var(--color-muted); font-weight: 600; }
     .opt-field select { margin-top: 2px; padding: 4px 6px; font-size: 12px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
   </style>
 </head>
 <body>
-  <h2>Rà Soát Văn Bản AI (PC Đồng Tháp)</h2>
-
-  <div class="card">
-    <label for="apiKey"><strong>Google Gemini API Key (BYOK):</strong></label>
-    <input type="password" id="apiKey" placeholder="Dán API key từ Google AI Studio (tùy chọn nếu chạy Offline)..." />
-    <button class="btn-secondary" id="saveKeyBtn">Lưu API Key</button>
-  </div>
-
-  <div class="card">
-    <label for="rulesFileInput"><strong>Quy định riêng nội bộ (file .txt):</strong></label>
-    <input type="file" id="rulesFileInput" accept=".txt" style="margin-top: 6px; width: 100%; font-size: 12px;" />
-    <div id="rulesStatus" class="rules-status">Chưa nạp quy định riêng (đang dùng chuẩn NĐ 30).</div>
-    <button class="btn-small-danger" id="clearRulesBtn" style="display: none;">🗑️ Xóa quy định riêng</button>
-
-    <button class="btn-small-info" id="toggleGlobalIgnoreBtn">📋 Quản lý danh sách bỏ qua chung (0)</button>
-    <div id="globalIgnorePanel" class="global-panel">
-      <div id="globalIgnoreList"></div>
-      <div class="io-row">
-        <button class="btn-secondary" id="exportGlobalIgnoreBtn">📥 Xuất file .txt</button>
-        <button class="btn-secondary" id="importGlobalIgnoreBtn">📤 Nhập file .txt</button>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-brand">
+      <div class="app-logo" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <path d="m9 15 2 2 4-4"/>
+        </svg>
       </div>
-      <input type="file" id="importGlobalIgnoreInput" accept=".txt" style="display: none;" />
-    </div>
-
-    <button class="btn-small-info" id="toggleCustomDictBtn">📖 Từ điển riêng Offline (0)</button>
-    <div id="customDictPanel" class="global-panel">
-      <div class="dict-input-row">
-        <input type="text" id="customDictInput" placeholder="Thêm từ/tên riêng (VD: Cao Lãnh, PCĐT)..." />
-        <button class="btn-primary" id="addCustomDictBtn">+ Thêm</button>
+      <div>
+        <h1 class="app-title">PC Đồng Tháp</h1>
+        <p class="app-subtitle">Rà soát văn bản NĐ 30</p>
       </div>
-      <div id="customDictList" class="dict-chips"></div>
     </div>
-  </div>
+    <span id="connBadge" class="conn-badge conn-online">Online</span>
+  </header>
 
-  <div class="card">
-    <label for="docTypeSelect"><strong>Loại văn bản kiểm tra:</strong></label>
+  <!-- Primary Action Card -->
+  <section class="card">
+    <label for="docTypeSelect">Loại văn bản kiểm tra</label>
     <select id="docTypeSelect">
-      <option value="auto">🤖 Tự động nhận diện loại văn bản</option>
+      <option value="auto">Tự động nhận diện loại văn bản</option>
       <option value="Công văn">Công văn</option>
       <option value="Quyết định">Quyết định</option>
       <option value="Tờ trình">Tờ trình</option>
@@ -150,26 +311,35 @@
       <option value="Quy định / Quy chế">Quy định / Quy chế</option>
       <option value="Văn bản hành chính khác">Văn bản hành chính khác</option>
     </select>
-    <div id="docTypeHint" class="hint">Để "Tự động nhận diện" để AI xác định trước, hoặc chọn chính xác loại văn bản rồi kiểm tra lại.</div>
+    <div id="docTypeHint" class="hint">Để "Tự động nhận diện" hoặc chọn đúng loại văn bản để kiểm tra.</div>
 
-    <button class="btn-primary" id="runCheckBtn">🔍 Kiểm tra theo quy trình (3 bước)</button>
-    <button class="btn-format" id="autoFormatBtn">📐 Kiểm tra & Chuẩn hóa (NĐ 30)</button>
+    <button class="btn-primary" id="runCheckBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <span>Kiểm tra theo quy trình (3 bước)</span>
+    </button>
+    <button class="btn-format" id="autoFormatBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 6H3"/><path d="M10 12H3"/><path d="M10 18H3"/><path d="M17 12v6"/><path d="M14 15h6"/></svg>
+      <span>Kiểm tra &amp; Chuẩn hóa (NĐ 30)</span>
+    </button>
 
     <div class="steps-bar" id="stepsBar" style="display: none;">
       <div class="step-pill" id="step1Pill">B1. Kỹ thuật</div>
       <div class="step-pill" id="step2Pill">B2. Chính tả</div>
       <div class="step-pill" id="step3Pill">B3. Hợp lệ</div>
     </div>
-    <div id="status"></div>
-  </div>
+    <div id="status" role="status" aria-live="polite"></div>
+  </section>
 
   <!-- Khung Kiểm tra & Xác nhận Chuẩn hóa theo NĐ 30 -->
-  <div id="formatReviewPanel" class="card format-panel">
-    <h3>📐 Kết quả kiểm tra kỹ thuật (NĐ 30 & QĐ 739/EVN)</h3>
+  <section id="formatReviewPanel" class="card format-panel">
+    <h3>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <span>Kết quả kiểm tra kỹ thuật (NĐ 30 &amp; QĐ 739/EVN)</span>
+    </h3>
     <div id="formatIssuesList"></div>
 
     <div id="formatOptionsBox" class="format-options">
-      <div class="format-options-title">⚙️ Thông số chuẩn hóa đích (theo NĐ 30):</div>
+      <div class="format-options-title">Thông số chuẩn hóa đích (theo NĐ 30):</div>
       <div class="opt-grid">
         <div class="opt-field">
           <label for="optFontSize">Cỡ chữ nội dung</label>
@@ -195,7 +365,7 @@
           </select>
         </div>
         <div class="opt-field">
-          <label for="optSpaceAfter">Cách đoạn (Before & After)</label>
+          <label for="optSpaceAfter">Cách đoạn (Before &amp; After)</label>
           <select id="optSpaceAfter">
             <option value="3">3 pt</option>
             <option value="6" selected>6 pt (mặc định)</option>
@@ -236,14 +406,58 @@
         </div>
       </div>
       <button class="btn-small-info" id="saveFormatDefaultsBtn">💾 Lưu làm mặc định (8 thông số)</button>
-      <div class="hint" style="margin-top:6px;">* Lưu ý: Trong <strong>Bảng (Table)</strong> chỉ đổi phông chữ Times New Roman, không can thiệp cỡ chữ/thụt dòng/canh đều để giữ nguyên bố cục.</div>
+      <div class="hint">* Trong <strong>Bảng (Table)</strong> chỉ đổi phông chữ Times New Roman, giữ nguyên bố cục.</div>
     </div>
 
     <div class="io-row" style="margin-top:8px;">
       <button class="btn-format" id="confirmFormatBtn">✅ Xác nhận chuẩn hóa</button>
-      <button class="btn-secondary" id="closeFormatPanelBtn" style="flex: 0.45;">✖ Đóng</button>
+      <button class="btn-secondary" id="closeFormatPanelBtn" style="flex: 0.42;">Đóng</button>
     </div>
-  </div>
+  </section>
+
+  <!-- Collapsible Settings Accordion -->
+  <details class="settings-accordion" id="settingsAccordion">
+    <summary class="settings-summary">
+      <span class="settings-summary-left">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Cài đặt, Quy định &amp; Từ điển</span>
+      </span>
+      <svg class="settings-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="settings-body">
+      <div class="settings-section">
+        <label for="apiKey">Google Gemini API Key (BYOK)</label>
+        <input type="password" id="apiKey" placeholder="Dán API key (tùy chọn nếu chạy Offline)..." />
+        <button class="btn-secondary" id="saveKeyBtn">Lưu API Key</button>
+      </div>
+
+      <div class="settings-section">
+        <label for="rulesFileInput">Quy định riêng nội bộ (.txt)</label>
+        <input type="file" id="rulesFileInput" accept=".txt" style="margin-top: 5px; width: 100%; font-size: 12px;" />
+        <div id="rulesStatus" class="rules-status">Chưa nạp quy định riêng (đang dùng chuẩn NĐ 30).</div>
+        <button class="btn-small-danger" id="clearRulesBtn" style="display: none;">Xóa quy định riêng</button>
+
+        <button class="btn-small-info" id="toggleGlobalIgnoreBtn">📋 Quản lý danh sách bỏ qua chung (0)</button>
+        <div id="globalIgnorePanel" class="global-panel">
+          <div id="globalIgnoreList"></div>
+          <div class="io-row">
+            <button class="btn-secondary" id="exportGlobalIgnoreBtn">Xuất file .txt</button>
+            <button class="btn-secondary" id="importGlobalIgnoreBtn">Nhập file .txt</button>
+          </div>
+          <input type="file" id="importGlobalIgnoreInput" accept=".txt" style="display: none;" />
+        </div>
+
+        <button class="btn-small-info" id="toggleCustomDictBtn">📖 Từ điển riêng Offline (0)</button>
+        <div id="customDictPanel" class="global-panel">
+          <div class="dict-input-row">
+            <input type="text" id="customDictInput" placeholder="Thêm từ/tên riêng (VD: Cao Lãnh, PCĐT)..." />
+            <button class="btn-primary" id="addCustomDictBtn">+ Thêm</button>
+          </div>
+          <div id="customDictList" class="dict-chips"></div>
+        </div>
+      </div>
+    </div>
+  </details>
 
   <div id="modeBadge" class="mode-badge"></div>
 
@@ -254,12 +468,12 @@
 
   <div id="results"></div>
 
-  <script src="js/word-utils.js?v=13"></script>
-  <script src="js/storage-manager.js?v=13"></script>
-  <script src="js/nd30-formatter.js?v=13"></script>
-  <script src="js/checker-step1.js?v=13"></script>
-  <script src="js/checker-ai.js?v=13"></script>
-  <script src="js/spellcheck-offline.js?v=13"></script>
-  <script src="js/app.js?v=13"></script>
+  <script src="js/word-utils.js?v=14"></script>
+  <script src="js/storage-manager.js?v=14"></script>
+  <script src="js/nd30-formatter.js?v=14"></script>
+  <script src="js/checker-step1.js?v=14"></script>
+  <script src="js/checker-ai.js?v=14"></script>
+  <script src="js/spellcheck-offline.js?v=14"></script>
+  <script src="js/app.js?v=14"></script>
 </body>
 </html>

@@ -3,6 +3,18 @@ window.PCDT = window.PCDT || {};
 (function (PCDT) {
   PCDT.lastRawGroups = null;
 
+  function updateConnectionBadge() {
+    const badge = document.getElementById("connBadge");
+    if (!badge) return;
+    if (navigator.onLine) {
+      badge.textContent = "Online";
+      badge.className = "conn-badge conn-online";
+    } else {
+      badge.textContent = "Offline";
+      badge.className = "conn-badge conn-offline";
+    }
+  }
+
   function updateNetworkModeBadge(isOfflineMode, reasonText) {
     const badge = document.getElementById("modeBadge");
     if (!badge) return;
@@ -77,6 +89,9 @@ window.PCDT = window.PCDT || {};
       groupWrapper.appendChild(header);
 
       const listContainer = document.createElement("div");
+      header.onclick = () => {
+        listContainer.style.display = listContainer.style.display === "none" ? "block" : "none";
+      };
 
       function updateGroupCount() {
         const unfixed = listContainer.querySelectorAll(".issue-item:not(.issue-fixed)").length;
@@ -393,6 +408,9 @@ window.PCDT = window.PCDT || {};
       PCDT.renderGlobalIgnoreManager();
       PCDT.renderCustomDictManager();
       PCDT.loadND30DefaultsToUI();
+      updateConnectionBadge();
+      window.addEventListener("online", updateConnectionBadge);
+      window.addEventListener("offline", updateConnectionBadge);
 
       document.getElementById("saveKeyBtn").onclick = PCDT.saveApiKey;
       document.getElementById("rulesFileInput").onchange = PCDT.handleRulesFileUpload;
