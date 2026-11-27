@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rà soát văn bản - PC Đồng Tháp</title>
+  <script>
+    (function () {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var src = isLocal
+        ? "offline-server/office-js-local/office.js"
+        : "https://appsforoffice.microsoft.com/lib/1/hosted/office.js";
+      document.write('<script src="' + src + '" onerror="if(!this.dataset.fb){this.dataset.fb=1;var s=document.createElement(\'script\');s.src=\'offline-server/office-js-local/office.js\';document.head.appendChild(s);}"><\/script>');
+    })();
+  </script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 14px; background: #f8f9fa; color: #222; font-size: 13px; }
+    h2 { margin: 0 0 10px; font-size: 16px; color: #164397; }
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    input[type="password"], input[type="text"], select { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 6px; background: #fff; font-size: 13px; }
+    button { width: 100%; padding: 9px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 8px; }
+    .btn-primary { background: #164397; color: #fff; }
+    .btn-primary:hover { background: #103275; }
+    .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
+    .btn-format { background: #059669; color: #fff; }
+    .btn-format:hover { background: #047857; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .btn-secondary:hover { background: #cbd5e1; }
+    .btn-group { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .btn-locate { background: #2563eb; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
+    .btn-locate:hover { background: #1d4ed8; }
+    .btn-recheck { background: #7c3aed; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
+    .btn-recheck:hover { background: #6d28d9; }
+    .btn-comment { background: #0f766e; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
+    .btn-fix { background: #d97706; color: #fff; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
+    .btn-fix:hover { background: #b45309; }
+    .btn-ignore { background: #e2e8f0; color: #475569; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 0; }
+    .btn-ignore:hover { background: #cbd5e1; color: #0f172a; }
+    .btn-small-danger { background: #fee2e2; color: #991b1b; padding: 5px 8px; font-size: 12px; width: auto; margin-top: 6px; }
+    .btn-small-info { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 6px 10px; font-size: 12px; width: 100%; margin-top: 8px; }
+    .btn-small-info:hover { background: #dbeafe; }
+
+    .rules-status { font-size: 12px; color: #0f766e; margin-top: 6px; }
+    .hint { font-size: 11.5px; color: #475569; margin-top: 6px; line-height: 1.4; }
+    #status { font-size: 12px; color: #1e3a8a; margin-top: 8px; font-weight: 500; }
+
+    .mode-badge { display: none; margin-bottom: 10px; padding: 8px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; line-height: 1.4; }
+    .mode-offline { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
+
+    .steps-bar { display: flex; gap: 4px; margin-top: 8px; }
+    .step-pill { flex: 1; text-align: center; font-size: 11px; padding: 4px 2px; border-radius: 4px; background: #e2e8f0; color: #64748b; font-weight: 600; }
+    .step-pill.active { background: #dbeafe; color: #1d4ed8; }
+    .step-pill.done { background: #dcfce7; color: #15803d; }
+
+    .result-group { margin-bottom: 14px; }
+    .group-header { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 6px; font-weight: 700; font-size: 12.5px; margin-bottom: 8px; }
+    .group-tech { background: #fef3c7; color: #92400e; }
+    .group-spell { background: #fee2e2; color: #991b1b; }
+    .group-valid { background: #e0e7ff; color: #3730a3; }
+    .group-count { background: rgba(255,255,255,0.8); padding: 1px 7px; border-radius: 10px; font-size: 11px; }
+
+    .issue-item { border-left: 3px solid #cbd5e1; padding-left: 10px; margin-bottom: 10px; }
+    .issue-fixed { border-left: 3px solid #16a34a !important; background: #f0fdf4 !important; opacity: 0.85; }
+    .quote { background: #f1f5f9; padding: 4px 6px; border-radius: 4px; font-style: italic; display: block; margin: 4px 0; }
+    .recheck-msg { font-size: 11.5px; margin-top: 6px; font-weight: 600; }
+
+    .ignore-box { margin-top: 8px; padding: 8px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; }
+    .ignore-box-title { font-size: 11.5px; font-weight: 600; color: #334155; margin-bottom: 6px; }
+    .ignore-reason-area { margin-top: 6px; }
+
+    .restore-bar { display: none; justify-content: space-between; align-items: center; background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 12px; color: #92400e; }
+    .restore-bar button { width: auto; margin-top: 0; padding: 4px 8px; font-size: 11.5px; background: #f59e0b; color: #fff; }
+    .restore-bar button:hover { background: #d97706; }
+
+    .global-panel { display: none; margin-top: 8px; border-top: 1px solid #e2e8f0; padding-top: 8px; }
+    .global-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; margin-bottom: 6px; font-size: 12px; }
+    .global-item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
+    .global-item-del { width: auto; margin-top: 0; padding: 2px 6px; font-size: 11px; background: #fee2e2; color: #991b1b; }
+    .io-row { display: flex; gap: 6px; margin-top: 6px; }
+    .io-row button { flex: 1; margin-top: 0; font-size: 11.5px; padding: 6px 8px; }
+
+    /* Từ điển riêng Offline */
+    .dict-input-row { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+    .dict-input-row input { flex: 1; margin-top: 0; padding: 6px 8px; font-size: 12px; }
+    .dict-input-row button { width: auto; margin-top: 0; padding: 6px 10px; font-size: 12px; }
+    .dict-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+    .dict-chip { display: inline-flex; align-items: center; gap: 4px; background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; border-radius: 12px; padding: 2px 8px; font-size: 11.5px; }
+    .dict-chip-del { width: auto; margin: 0; padding: 0 3px; background: transparent; color: #0369a1; font-size: 13px; line-height: 1; }
+    .dict-chip-del:hover { color: #dc2626; }
+
+    /* Bảng Kiểm tra & Chuẩn hóa NĐ 30 */
+    .format-panel { display: none; border: 1px solid #a7f3d0; background: #f0fdf4; }
+    .format-panel h3 { margin: 0 0 8px; font-size: 13.5px; color: #065f46; }
+    .format-check-item { display: flex; align-items: flex-start; gap: 8px; background: #fff; border: 1px solid #d1fae5; border-radius: 6px; padding: 7px 8px; margin-bottom: 6px; font-size: 12px; }
+    .format-check-item input[type="checkbox"] { margin-top: 2px; cursor: pointer; }
+    .format-check-detail { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .format-options { background: #fff; border: 1px solid #d1fae5; border-radius: 6px; padding: 8px; margin-top: 8px; }
+    .format-options-title { font-size: 12px; font-weight: 700; color: #065f46; margin-bottom: 6px; }
+    .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .opt-field label { display: block; font-size: 11px; color: #475569; font-weight: 600; }
+    .opt-field select { margin-top: 2px; padding: 4px 6px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h2>Rà Soát Văn Bản AI (PC Đồng Tháp)</h2>
+
+  <div class="card">
+    <label for="apiKey"><strong>Google Gemini API Key (BYOK):</strong></label>
+    <input type="password" id="apiKey" placeholder="Dán API key từ Google AI Studio (tùy chọn nếu chạy Offline)..." />
+    <button class="btn-secondary" id="saveKeyBtn">Lưu API Key</button>
+  </div>
+
+  <div class="card">
+    <label for="rulesFileInput"><strong>Quy định riêng nội bộ (file .txt):</strong></label>
+    <input type="file" id="rulesFileInput" accept=".txt" style="margin-top: 6px; width: 100%; font-size: 12px;" />
+    <div id="rulesStatus" class="rules-status">Chưa nạp quy định riêng (đang dùng chuẩn NĐ 30).</div>
+    <button class="btn-small-danger" id="clearRulesBtn" style="display: none;">🗑️ Xóa quy định riêng</button>
+
+    <button class="btn-small-info" id="toggleGlobalIgnoreBtn">📋 Quản lý danh sách bỏ qua chung (0)</button>
+    <div id="globalIgnorePanel" class="global-panel">
+      <div id="globalIgnoreList"></div>
+      <div class="io-row">
+        <button class="btn-secondary" id="exportGlobalIgnoreBtn">📥 Xuất file .txt</button>
+        <button class="btn-secondary" id="importGlobalIgnoreBtn">📤 Nhập file .txt</button>
+      </div>
+      <input type="file" id="importGlobalIgnoreInput" accept=".txt" style="display: none;" />
+    </div>
+
+    <button class="btn-small-info" id="toggleCustomDictBtn">📖 Từ điển riêng Offline (0)</button>
+    <div id="customDictPanel" class="global-panel">
+      <div class="dict-input-row">
+        <input type="text" id="customDictInput" placeholder="Thêm từ/tên riêng (VD: Cao Lãnh, PCĐT)..." />
+        <button class="btn-primary" id="addCustomDictBtn">+ Thêm</button>
+      </div>
+      <div id="customDictList" class="dict-chips"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label for="docTypeSelect"><strong>Loại văn bản kiểm tra:</strong></label>
+    <select id="docTypeSelect">
+      <option value="auto">🤖 Tự động nhận diện loại văn bản</option>
+      <option value="Công văn">Công văn</option>
+      <option value="Quyết định">Quyết định</option>
+      <option value="Tờ trình">Tờ trình</option>
+      <option value="Báo cáo">Báo cáo</option>
+      <option value="Thông báo">Thông báo</option>
+      <option value="Kế hoạch">Kế hoạch</option>
+      <option value="Biên bản">Biên bản</option>
+      <option value="Quy định / Quy chế">Quy định / Quy chế</option>
+      <option value="Văn bản hành chính khác">Văn bản hành chính khác</option>
+    </select>
+    <div id="docTypeHint" class="hint">Để "Tự động nhận diện" để AI xác định trước, hoặc chọn chính xác loại văn bản rồi kiểm tra lại.</div>
+
+    <button class="btn-primary" id="runCheckBtn">🔍 Kiểm tra theo quy trình (3 bước)</button>
+    <button class="btn-format" id="autoFormatBtn">📐 Kiểm tra & Chuẩn hóa (NĐ 30)</button>
+
+    <div class="steps-bar" id="stepsBar" style="display: none;">
+      <div class="step-pill" id="step1Pill">B1. Kỹ thuật</div>
+      <div class="step-pill" id="step2Pill">B2. Chính tả</div>
+      <div class="step-pill" id="step3Pill">B3. Hợp lệ</div>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <!-- Khung Kiểm tra & Xác nhận Chuẩn hóa theo NĐ 30 -->
+  <div id="formatReviewPanel" class="card format-panel">
+    <h3>📐 Kết quả kiểm tra kỹ thuật (NĐ 30 & QĐ 739/EVN)</h3>
+    <div id="formatIssuesList"></div>
+
+    <div id="formatOptionsBox" class="format-options">
+      <div class="format-options-title">⚙️ Thông số chuẩn hóa đích (theo NĐ 30):</div>
+      <div class="opt-grid">
+        <div class="opt-field">
+          <label for="optFontSize">Cỡ chữ nội dung</label>
+          <select id="optFontSize">
+            <option value="13" selected>13 pt</option>
+            <option value="14">14 pt</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optIndent">Thụt đầu dòng</label>
+          <select id="optIndent">
+            <option value="1.27" selected>1,27 cm (0.5 in)</option>
+            <option value="1.0">1,0 cm</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optLineSpacing">Giãn dòng (Line)</label>
+          <select id="optLineSpacing">
+            <option value="1.15" selected>1,15 lines</option>
+            <option value="1.0">1,0 (Đơn)</option>
+            <option value="1.2">1,2 lines</option>
+            <option value="1.5">1,5 lines</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optSpaceAfter">Cách đoạn (Before & After)</label>
+          <select id="optSpaceAfter">
+            <option value="3">3 pt</option>
+            <option value="6" selected>6 pt (mặc định)</option>
+            <option value="8">8 pt</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optMarginTop">Lề trên (20–25mm)</label>
+          <select id="optMarginTop">
+            <option value="20" selected>20 mm</option>
+            <option value="22">22 mm</option>
+            <option value="25">25 mm</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optMarginBottom">Lề dưới (20–25mm)</label>
+          <select id="optMarginBottom">
+            <option value="20" selected>20 mm</option>
+            <option value="22">22 mm</option>
+            <option value="25">25 mm</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optMarginLeft">Lề trái (30–35mm)</label>
+          <select id="optMarginLeft">
+            <option value="30" selected>30 mm</option>
+            <option value="32">32 mm</option>
+            <option value="35">35 mm</option>
+          </select>
+        </div>
+        <div class="opt-field">
+          <label for="optMarginRight">Lề phải (15–20mm)</label>
+          <select id="optMarginRight">
+            <option value="15" selected>15 mm</option>
+            <option value="18">18 mm</option>
+            <option value="20">20 mm</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-small-info" id="saveFormatDefaultsBtn">💾 Lưu làm mặc định (8 thông số)</button>
+      <div class="hint" style="margin-top:6px;">* Lưu ý: Trong <strong>Bảng (Table)</strong> chỉ đổi phông chữ Times New Roman, không can thiệp cỡ chữ/thụt dòng/canh đều để giữ nguyên bố cục.</div>
+    </div>
+
+    <div class="io-row" style="margin-top:8px;">
+      <button class="btn-format" id="confirmFormatBtn">✅ Xác nhận chuẩn hóa</button>
+      <button class="btn-secondary" id="closeFormatPanelBtn" style="flex: 0.45;">✖ Đóng</button>
+    </div>
+  </div>
+
+  <div id="modeBadge" class="mode-badge"></div>
+
+  <div id="restoreBar" class="restore-bar">
+    <span id="restoreText">Đã bỏ qua 0 lỗi ở văn bản này.</span>
+    <button id="restoreSessionBtn">↺ Khôi phục</button>
+  </div>
+
+  <div id="results"></div>
+
+  <script src="js/word-utils.js?v=13"></script>
+  <script src="js/storage-manager.js?v=13"></script>
+  <script src="js/nd30-formatter.js?v=13"></script>
+  <script src="js/checker-step1.js?v=13"></script>
+  <script src="js/checker-ai.js?v=13"></script>
+  <script src="js/spellcheck-offline.js?v=13"></script>
+  <script src="js/app.js?v=13"></script>
+</body>
+</html>

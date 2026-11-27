@@ -1,0 +1,17 @@
+{
+  "terms": [
+    "EVN", "EVNSPC", "PCĐT", "PCĐTh", "HĐTV", "TGĐ", "PTGĐ", "GĐ", "PGĐ",
+    "VP", "KHVT", "TCNS", "TCKT", "KT", "AT", "ĐĐ", "KTTT", "VTCNTT", "TTĐK", "QLĐT", "KD", "ĐT",
+    "TBA", "ĐZ", "MBA", "DCL", "MC", "LBS", "FCO", "LA", "TU", "TI", "RMU", "Recloser", "XLPE", "ACSR",
+    "kV", "kW", "kWh", "MW", "MVA", "MVAr", "kVA", "kVAr", "Hz", "A", "V", "mA",
+    "SCADA", "DMS", "OMS", "PMIS", "CMIS", "ERP", "HRMS", "DOffice", "D-Office", "eOffice",
+    "SAIDI", "SAIFI", "MAIFI", "KPI", "ISO", "TCVN", "QCVN", "IEC", "IEEE",
+    "PCCC", "ATLD", "ATVSLĐ", "BHLĐ", "QLVH", "ĐTXD", "SCL", "SCTX", "XDCB", "BQLDA",
+    "UBND", "HĐND", "Sở", "CNTT", "TTCNTT", "CNH", "HĐH", "BCH", "ĐTN", "CĐCS",
+    "QĐ", "TB", "BC", "TTr", "KH", "BB", "QC", "QyĐ", "HD", "CT", "CĐ", "NQ", "GM", "GGT", "GNP",
+    "TUQ", "TL", "TM", "VT", "PDF", "DOCX", "HTML", "XML", "JSON", "URL", "Email", "USB", "LAN", "WAN", "VPN",
+    "Cao Lãnh", "Sa Đéc", "Hồng Ngự", "Lấp Vò", "Lai Vung", "Châu Thành", "Tháp Mười",
+    "Tam Nông", "Tân Hồng", "Thanh Bình", "Đồng Tháp", "Tiền Giang", "Cửu Long", "Mỹ Tho",
+    "Nguyễn", "Trần", "Lê", "Phạm", "Huỳnh", "Hoàng", "Phan", "Vũ", "Võ", "Đặng", "Bùi", "Đỗ", "Hồ", "Ngô", "Dương", "Lý"
+  ]
+}

@@ -1,0 +1,127 @@
+# QUY ĐỊNH NỘI BỘ VỀ THỂ THỨC, KỸ THUẬT TRÌNH BÀY, VIỆN DẪN VÀ VĂN BẢN ĐIỆN TỬ
+# Phạm vi áp dụng: Công ty Điện lực Đồng Tháp (PCĐT) - Tổng công ty Điện lực miền Nam (EVNSPC) - Tập đoàn Điện lực Việt Nam (EVN)
+# Căn cứ pháp lý & nội bộ:
+# 1. Nghị định số 30/2020/NĐ-CP ngày 05/3/2020 của Chính phủ về công tác văn thư.
+# 2. Quyết định số 1080/QĐ-EVN ngày 01/8/2021 của EVN ban hành Quy định về công tác văn phòng trong EVN.
+# 3. Quyết định số 739/QĐ-EVN ngày 10/5/2022 của EVN ban hành Quy định thể thức và kỹ thuật trình bày văn bản hành chính trong EVN.
+# 4. Quyết định số 08/QĐ-HĐTV ngày 12/01/2026 của HĐTV EVNSPC ban hành Quy định về công tác văn phòng trong EVNSPC.
+# 5. Công văn số 3156/PCĐT-VP ngày 20/4/2026 và Công văn số 9975/PCĐT-VP ngày 03/11/2026 của Công ty Điện lực Đồng Tháp.
+
+================================================================================
+PHẦN I. QUY CHUẨN KỸ THUẬT TRÌNH BÀY CHUNG
+================================================================================
+1. Khổ giấy & Kiểu trình bày: Khổ A4 (210 mm x 297 mm), trình bày theo chiều dài (chỉ trình bày theo chiều rộng nếu có bảng, biểu không tách phụ lục riêng).
+2. Định lề trang: Trên và dưới 20–25 mm; Trái 30–35 mm; Phải 15–20 mm.
+3. Phông chữ: Times New Roman (Unicode TCVN 6909:2001), màu đen.
+4. Số trang: Chữ số Ả Rập, cỡ 13–14pt, đứng, canh giữa lề trên; KHÔNG hiển thị số trang thứ nhất. Phụ lục đánh số trang riêng theo từng Phụ lục từ số 1 (không hiển thị trang 1).
+5. Định dạng nội dung: In thường, đứng, cỡ 13–14pt, canh đều hai lề (Justify); xuống dòng lùi đầu dòng 1 cm hoặc 1,27 cm; khoảng cách đoạn tối thiểu 6pt; giãn dòng từ đơn (single) đến 1,5 lines.
+
+================================================================================
+PHẦN II. THÔNG TIN ĐỊNH DANH & THÀNH PHẦN THỂ THỨC TẠI PC ĐỒNG THÁP
+================================================================================
+1. Quốc hiệu & Tiêu ngữ (góc trên, bên phải trang 1):
+   - Quốc hiệu: "CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM" (in hoa, cỡ 12–13pt, đứng, đậm).
+   - Tiêu ngữ: "Độc lập - Tự do - Hạnh phúc" (in thường, cỡ 13–14pt, đứng, đậm, canh giữa dưới Quốc hiệu; giữa các cụm từ có gạch nối "-" có cách chữ). Đường kẻ nét liền bên dưới bằng độ dài dòng Tiêu ngữ.
+
+2. Tên cơ quan ban hành (góc trên, bên trái trang 1):
+   - Cơ quan chủ quản trực tiếp: "TỔNG CÔNG TY ĐIỆN LỰC MIỀN NAM" (in hoa, cỡ 12–13pt, đứng, không đậm).
+   - Cơ quan ban hành: "CÔNG TY ĐIỆN LỰC ĐỒNG THÁP" (in hoa, cỡ 12–13pt, đứng, đậm, canh giữa dưới cơ quan chủ quản). Đường kẻ nét liền bên dưới dài bằng 1/3 đến 1/2 độ dài dòng chữ.
+
+3. Số, ký hiệu văn bản (canh giữa dưới tên cơ quan ban hành):
+   - Từ "Số:" in thường, đứng, cỡ 13pt; ký hiệu chữ in hoa, đứng, cỡ 13pt. Số < 10 thêm số 0 phía trước (VD: Số: 05/PCĐT-VP).
+   - Giữa số và ký hiệu dùng dấu (/), giữa các nhóm chữ viết tắt dùng dấu (-), KHÔNG cách chữ.
+   - Văn bản có tên loại: "Số: .../<Viết tắt tên loại>-PCĐT" (VD: /QĐ-PCĐT, /TB-PCĐT, /BC-PCĐT, /TTr-PCĐT, /CĐ-PCĐT).
+   - Công văn: "Số: .../PCĐT-<Viết tắt phòng chủ trì>" (VD: 3156/PCĐT-VP). Từ 02 Phòng/Ban đồng trình trở lên dùng dấu (+) không cách chữ (VD: /PCĐT-VP+KT).
+   - Tổ chức tư vấn (Hội đồng, Ban, Tổ) được dùng con dấu/chữ ký số Công ty: lấy hệ thống số riêng và ký hiệu viết tắt theo Quyết định thành lập.
+
+4. Địa danh & Thời gian ban hành (cùng dòng Số, ký hiệu; canh giữa dưới Quốc hiệu, Tiêu ngữ):
+   - In thường, nghiêng, cỡ 13–14pt: "Đồng Tháp, ngày ... tháng ... năm ...".
+   - Viết đầy đủ "ngày ... tháng ... năm ..."; ngày < 10 và tháng 1, tháng 2 BẮT BUỘC thêm số 0 phía trước (VD: Đồng Tháp, ngày 03 tháng 11 năm 2026).
+   - Địa danh hành chính đặt theo tên người, chữ số, sự kiện lịch sử ghi đầy đủ (VD: Thành phố Hồ Chí Minh,).
+
+5. Xác định đúng thể loại & Trích yếu nội dung (LỖI HAY GẶP):
+   - Văn bản có tên loại (Quyết định, Thông báo, Báo cáo, Tờ trình, Chỉ thị...): Tên loại in hoa, đứng, đậm (13–14pt); trích yếu ngay dưới in thường, đứng, đậm (13–14pt), canh giữa, dưới có đường kẻ nét liền dài 1/3–1/2 dòng chữ.
+   - Công văn: Dùng trao đổi, giao tiếp. Trích yếu đặt dưới Số, ký hiệu (cách 6pt), sau "V/v ", in thường, đứng, cỡ 12–13pt.
+     + CẤM viết hoa chữ cái ngay sau "V/v " nếu không phải danh từ riêng (SAI: "V/v Cập nhật sơ đồ Lưới điện"; ĐÚNG: "V/v cập nhật sơ đồ lưới điện").
+     + CẤM dùng Công văn thay cho Thông báo, Báo cáo (SAI: "V/v thông báo...", "V/v báo cáo..." -> PHẢI đổi sang mẫu có tên loại "THÔNG BÁO", "BÁO CÁO").
+   - Tờ trình: Chỉ dùng đề xuất cấp trên có thẩm quyền phê duyệt; KHÔNG dùng Tờ trình gửi đơn vị cùng cấp.
+   - Báo cáo: Bắt buộc có mục "Kính gửi:".
+   - Văn bản xử lý thuần túy nội bộ Cơ quan Công ty (không gửi ra ngoài, kể cả Điện lực/Xí nghiệp trực thuộc): dùng văn bản nội bộ hoặc Tờ trình qua Lãnh đạo, không nhất thiết ban hành văn bản đi.
+   - Trích yếu phải ngắn gọn nhưng phản ánh đủ nội dung chính của văn bản.
+
+6. Bố cục nội dung (Quy định, Quy chế, Văn bản dài):
+   - Phân chia: Phần -> Chương -> Mục -> Tiểu mục -> Điều -> Khoản -> Điểm (Phần, Chương, Mục, Tiểu mục, Điều bắt buộc có tiêu đề).
+   - Phần, Chương (số La Mã) & Mục, Tiểu mục (số Ả Rập): từ loại + số in thường đậm canh giữa; tiêu đề ngay dưới in hoa đậm canh giữa.
+   - Điều (số Ả Rập + dấu chấm): lùi đầu dòng 1–1,27 cm, in thường, đứng, đậm.
+   - Khoản (số Ả Rập + dấu chấm): đứng (nếu có tiêu đề thì đứng, đậm trên dòng riêng).
+   - Điểm: chữ cái tiếng Việt + ")", in thường, đứng, đúng thứ tự: a), b), c), d), đ), e), g), h), i), k), l), m), n), o), p), q), r), s), t), u), v), x), y).
+
+7. Quyền hạn, chức vụ, họ tên & chữ ký người có thẩm quyền:
+   - Quyền hạn ("TM.", "Q.", "KT.", "TL.", "TUQ.") và Chức vụ: in hoa, cỡ 13–14pt, đứng, đậm.
+   - KHÔNG viết tắt hoặc ghi sai tên chức vụ: PHẢI ghi đầy đủ "PHÓ GIÁM ĐỐC" (CẤM viết "PGĐ"), "PHÓ TRƯỞNG ĐIỆN LỰC" (CẤM viết "PHÓ ĐIỆN LỰC").
+   - Họ tên người ký: in thường, cỡ 13–14pt, đứng, đậm; KHÔNG ghi học hàm, học vị, danh hiệu danh dự trước họ tên.
+   - LƯU Ý ĐẶC BIỆT VỚI QUYẾT ĐỊNH (TRÁNH BẮT LỖI NHẦM):
+     + Vị trí 1 - THẨM QUYỀN BAN HÀNH (nằm ở ĐẦU văn bản, ngay dưới trích yếu và TRÊN phần "Căn cứ...", VD: "GIÁM ĐỐC CÔNG TY ĐIỆN LỰC ĐỒNG THÁP"): Đây KHÔNG phải vị trí ký. TUYỆT ĐỐI KHÔNG báo lỗi thiếu "KT."/"TM.", thiếu họ tên hay thiếu khoảng trống ký số tại vị trí này.
+     + Vị trí 2 - NGƯỜI KÝ BAN HÀNH (chỉ nằm ở CUỐI văn bản, SAU ký hiệu "./." và ngang hàng mục "Nơi nhận:"): Chỉ kiểm tra quyền hạn ký, họ tên và khoảng trống ký số tại vị trí cuối văn bản này. Nếu Giám đốc ký trực tiếp thì ghi "GIÁM ĐỐC" là ĐÚNG.
+
+8. Quy định về "Kính gửi:" và "Nơi nhận:":
+   - "Kính gửi:" (in thường, đứng, cỡ 13–14pt): Gửi 1 nơi viết trên 1 dòng; gửi từ 2 nơi trở lên xuống dòng gạch đầu dòng (-) thẳng hàng dưới dấu (:), cuối dòng dấu (;), dòng cuối dấu (.).
+   - KHÔNG ghi lẫn lộn đơn vị bên ngoài và đơn vị nội bộ trong cùng mục "Kính gửi:". Văn bản gửi cơ quan bên ngoài (Sở, Ban ngành...) chỉ ghi đơn vị ngoài ở "Kính gửi:"; các đơn vị nội bộ (Điện lực, Phòng ban) đưa xuống "Nơi nhận:".
+   - KHÔNG ghi tên Phòng chủ trì soạn thảo hoặc Phòng phối hợp đồng trình vào mục "Kính gửi:" (phòng phối hợp được phân công trong nội dung văn bản).
+   - "Nơi nhận:": Từ "Nơi nhận:" ngang hàng dòng quyền hạn/chức vụ người ký, sát lề trái, in thường, nghiêng, đậm (12pt). Danh sách nơi nhận in thường, đứng (11pt), gạch đầu dòng (-), cuối dòng dấu (;), dòng cuối "- Lưu: VT, <Viết tắt phòng soạn thảo>[số bản nếu có]." kết thúc bằng dấu chấm (.).
+   - Nguyên tắc gửi: đúng thẩm quyền giải quyết/phối hợp/báo cáo; không gửi vượt cấp, không gửi nhiều bản cho cùng một đối tượng. Nơi nhận cần gửi bản giấy (ngoài ngành không kết nối D-Office) ghi rõ "(bản giấy)".
+
+9. Các thành phần thể thức bổ sung:
+   - Phụ lục: "Phụ lục" + số La Mã (13–14pt, in thường, đứng, đậm, canh giữa); tiêu đề phụ lục (in hoa, đứng, đậm, canh giữa). Chỉ dẫn "(Kèm theo văn bản số...)" ghi đủ đối với bản giấy; văn bản điện tử không bắt buộc điền.
+   - Dấu chỉ độ mật (TUYỆT MẬT, TỐI MẬT, MẬT), mức độ khẩn (HỎA TỐC, THƯỢNG KHẨN, KHẨN), phạm vi lưu hành (XEM XONG TRẢ LẠI, LƯU HÀNH NỘI BỘ): in hoa, đứng, đậm, cỡ 13–14pt.
+   - Ký hiệu người soạn thảo & số lượng bản phát hành: in hoa + số Ả Rập, cỡ 11pt, đứng. Địa chỉ/email/website/ĐT/fax ở cuối trang 1 dưới đường kẻ ngang: in thường, đứng, cỡ 11–12pt.
+
+================================================================================
+PHẦN III. QUY ĐỊNH CHẶT CHẼ VỀ VIỆN DẪN PHÁP LÝ & VĂN BẢN NỀN TẢNG PCĐT
+================================================================================
+1. Viện dẫn Luật, Pháp lệnh: KHÔNG ghi số, ký hiệu, cơ quan ban hành (VD ĐÚNG: "Căn cứ Luật Đấu thầu ngày 23 tháng 6 năm 2023").
+2. Viện dẫn lần đầu (văn bản dưới luật, văn bản EVN/EVNSPC/PCĐT): BẮT BUỘC ghi đủ 5 yếu tố: Tên loại + Số, ký hiệu + Thời gian ban hành + Cơ quan ban hành + Trích yếu nội dung.
+   - Thời gian trong nội dung Công văn/văn bản PHẢI viết đầy đủ "ngày ... tháng ... năm ...", KHÔNG viết tắt dạng "01/01/2026".
+   - VD ĐÚNG: "Căn cứ Công văn số 1041/EVNSPC-VTCNTT ngày 10 tháng 02 năm 2025 của Tổng công ty Điện lực miền Nam về việc..."
+3. Viện dẫn các lần tiếp theo: Chỉ ghi Tên loại + Số, ký hiệu (VD ĐÚNG: "Thông báo số 234/TB-EVNSPC", "Công văn số 1041/EVNSPC-VTCNTT").
+   - TUYỆT ĐỐI CẤM viết tắt tùy tiện kiểu: "CV1041", "CV294", "VB294", "TB134".
+4. KHÔNG viện dẫn văn bản không liên quan trực tiếp đến nội dung văn bản phát hành.
+5. RIÊNG ĐỐI VỚI QUYẾT ĐỊNH (Phần căn cứ in nghiêng, mỗi dòng kết thúc dấu ";", dòng cuối dấu "."):
+   - BẮT BUỘC mở đầu theo đúng thứ tự 3 nhóm căn cứ nền tảng của Công ty Điện lực Đồng Tháp dưới đây, sau đó mới đến các căn cứ pháp lý chuyên môn liên quan trực tiếp:
+     + (1) Quyết định thành lập (đổi tên Công ty) — HỢP LỆ KHI ĐẶT ĐẦU TIÊN (TUYỆT ĐỐI KHÔNG BÁO LỖI):
+       * Quyết định số 235/QĐ-EVN ngày 14 tháng 4 năm 2010 của Tập đoàn Điện lực Việt Nam về việc đổi tên các Điện lực trực thuộc Tổng công ty Điện lực miền Nam.
+     + (2) Quy chế tổ chức và hoạt động của Công ty Điện lực Đồng Tháp:
+       * Quyết định số 201/QĐ-HĐTV ngày 05 tháng 8 năm 2025 của Hội đồng thành viên Tổng công ty Điện lực miền Nam về việc ban hành Quy chế tổ chức và hoạt động của Công ty Điện lực Đồng Tháp.
+     + (3) Quy chế phân cấp quản lý (và văn bản sửa đổi, bổ sung):
+       * Quyết định số 1677/QĐ-EVNSPC ngày 01 tháng 6 năm 2025 của Tổng công ty Điện lực miền Nam ban hành Quy chế phân cấp quản lý giữa Tổng Giám đốc và Giám đốc đơn vị trực thuộc trong Tổng công ty Điện lực miền Nam.
+       * Quyết định số 1824/QĐ-EVNSPC ngày 17 tháng 6 năm 2025 của Tổng công ty Điện lực miền Nam về việc sửa đổi, bổ sung một số nội dung trong “Quy chế phân cấp thẩm quyền quản lý giữa Tổng Giám đốc và Giám đốc đơn vị trực thuộc trong Tổng công ty Điện lực miền Nam” được ban hành theo Quyết định số 1677/QĐ-EVNSPC ngày 01 tháng 6 năm 2025.
+   - YÊU CẦU ĐỐI CHIẾU CHO AI: Khi văn bản viện dẫn các Quyết định nền tảng trên, PHẢI đối chiếu chính xác số, ký hiệu (bắt lỗi nếu thừa khoảng trắng kiểu "EVN SPC"), ngày tháng năm và cơ quan ban hành theo danh sách chuẩn trên; nếu ghi sai số/ngày/cơ quan thì báo lỗi ngay.
+
+================================================================================
+PHẦN IV. QUY ĐỊNH VĂN BẢN ĐIỆN TỬ, KÝ SỐ (D-OFFICE) & ĐẶT TÊN FILE
+================================================================================
+1. Ký tự bắt buộc để phần mềm D-Office nhận dạng:
+   - Vùng số ký hiệu: bắt buộc có chữ "Số:".
+   - Vùng địa danh, ngày tháng: bắt buộc có chữ "ngày".
+   - Kết thúc nội dung văn bản: bắt buộc có ký hiệu "./." để chèn chữ ký tắt (ký nháy).
+   - Vùng ký lãnh đạo (cuối văn bản): bắt buộc có đầy đủ "Họ và tên người ký".
+2. Khoảng trống chừa cho chữ ký số & con dấu:
+   - Giữa chức danh người ký và họ tên người ký chừa tối thiểu 6–7 dòng đơn (theo CV 3156/PCĐT-VP và QĐ 739/QĐ-EVN; tối thiểu 11 dòng đơn cho vùng ý kiến phê duyệt của văn bản nội bộ).
+   - Chữ ký số lãnh đạo màu xanh (.png nền trong suốt); dấu cơ quan màu đỏ (.png nền trong suốt) trùm lên khoảng 1/3 chữ ký về bên trái.
+3. Phụ lục văn bản điện tử:
+   - Phụ lục dạng Word gộp chung vào 01 tệp với văn bản chính (không ký, đóng dấu riêng).
+   - Phụ lục khác tệp tin (Excel, bản vẽ...): Lãnh đạo phòng chủ trì ký tắt, Văn thư ký số cơ quan tại góc trên bên phải trang đầu (không hiển thị hình ảnh dấu; chỉ hiển thị Số, ký hiệu và thời gian ký chuẩn ISO 8601, Times New Roman cỡ 10pt, đứng, màu đen).
+4. Đặt tên file văn bản điện tử (3 phần, tiếng Việt không dấu):
+   - Phần 1 - Số, ký hiệu: thay "/" bằng "-", "Đ" thành "D", "Ư" thành "U".
+   - Phần 2 - Ngày tháng năm: 08 chữ số liền ddmmyyyy (thêm "0" trước ngày < 10 và tháng < 3).
+   - Phần 3 - Trích yếu: viết không dấu (có thể rút gọn nhưng đủ nghĩa).
+5. Tiêu chuẩn số hóa văn bản giấy: PDF phiên bản 1.4+, ảnh màu, độ phân giải tối thiểu 200 dpi, tỷ lệ 100%.
+
+================================================================================
+PHẦN V. NGÔN NGỮ, VĂN PHONG & QUY CHUẨN VIẾT HOA NGÀNH ĐIỆN
+================================================================================
+1. Văn phong: Ngôn ngữ viết hành chính chuẩn mực, ngắn gọn, súc tích, sắp xếp ý mạch lạc, có đề xuất giải pháp cụ thể (tránh dài dòng, thiếu đề xuất).
+2. Từ ngữ bị CẤM: Không dùng khẩu ngữ, biệt ngữ, từ địa phương thiếu trang trọng như: "thi trượt", "vại" (vậy), "bít" (biết), "thui" (thôi), "chúa nhật" (chủ nhật)...
+3. Quy chuẩn viết hoa đặc thù ngành Điện (QĐ 739/QĐ-EVN):
+   - Viết hoa đúng: Nhà nước; Nhân dân; Đảng; Bí thư Đảng ủy; Phó Bí thư thường trực Đảng ủy; Cơ quan EVN; Cơ quan Tổng công ty; Chủ tịch Hội đồng thành viên; Thành viên Hội đồng thành viên; Tổng giám đốc; Phó Tổng giám đốc; Kiểm soát viên Nhà nước; Kế toán trưởng; Trưởng ban; Phó Trưởng ban; Chánh Văn phòng; Bí thư chi bộ; Chi bộ Văn phòng; Chủ tịch Công đoàn Điện lực Việt Nam; tên loại văn bản cụ thể khi viện dẫn (Nghị quyết, Quyết định, Công văn...).
+   - Đơn vị hành chính: Chỉ viết hoa tên riêng (VD: "Ủy ban nhân dân thành phố Cao Lãnh"), TRỪ "Thành phố Hồ Chí Minh" và đơn vị hành chính đặt theo số, danh nhân, sự kiện lịch sử (VD: "Phường Quang Trung", "Quận 1").

@@ -1,0 +1,4 @@
+﻿offline-server/certs/*.pfx
+offline-server/certs/*.cer
+offline-server/certs/*.key
+offline-server/certs/*.crt
