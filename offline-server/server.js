@@ -66,7 +66,9 @@ const server = https.createServer(loadTlsOptions(), (req, res) => {
 
     res.writeHead(200, {
       "Content-Type": contentType,
-      "Cache-Control": "no-cache"
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0"
     });
     fs.createReadStream(fullPath).pipe(res);
   });

@@ -170,12 +170,65 @@ window.PCDT = window.PCDT || {};
     }
   }
 
+  function stripVnDiacritics(str) {
+    return (str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/Đ/g, "D")
+      .toLowerCase();
+  }
+
+  /**
+   * Khôi phục chuỗi thay thế đầy đủ nếu AI lỡ chỉ trả về 1 từ sửa ngắn hơn cụm quote
+   * (VD: quote="móng bê tông cốt thép đỗ tại chỗ", replacement="đổ" -> "móng bê tông cốt thép đổ tại chỗ").
+   */
+  function resolveSafeReplacement(quoteText, replacementText) {
+    const q = (quoteText || "").trim();
+    const r = (replacementText || "").trim();
+    if (!q || !r) return { safeText: r, needsConfirm: false };
+
+    const qWords = q.split(/\s+/);
+    const rWords = r.split(/\s+/);
+
+    if (qWords.length >= 2 && rWords.length === 1 && r.length < q.length * 0.6) {
+      const rBase = stripVnDiacritics(r);
+      const matchIdx = qWords.findIndex((w) => {
+        const cleanW = w.replace(/[.,;:!?()"'“”]/g, "");
+        return stripVnDiacritics(cleanW) === rBase && cleanW !== r;
+      });
+      if (matchIdx !== -1) {
+        const updatedWords = [...qWords];
+        const orig = updatedWords[matchIdx];
+        const prefix = orig.match(/^[("'“]*/)?.[0] || "";
+        const suffix = orig.match(/[.,;:!?)"'”]*$/)?.[0] || "";
+        updatedWords[matchIdx] = prefix + r + suffix;
+        return { safeText: updatedWords.join(" "), needsConfirm: false };
+      }
+      return { safeText: r, needsConfirm: true };
+    }
+
+    if (q.length >= 15 && r.length < q.length * 0.55) {
+      return { safeText: r, needsConfirm: true };
+    }
+
+    return { safeText: r, needsConfirm: false };
+  }
+
   async function applyAutoFix(quoteText, replacementText, btnElement, onFixedCallback) {
     try {
+      const { safeText, needsConfirm } = resolveSafeReplacement(quoteText, replacementText);
+      if (needsConfirm) {
+        const ok = confirm(
+          `Cảnh báo: Chuỗi thay thế "${safeText}" ngắn hơn nhiều so với đoạn gốc "${quoteText}".\nBạn có chắc chắn muốn thay thế toàn bộ đoạn gốc không?`
+        );
+        if (!ok) return;
+      }
+
       await Word.run(async (context) => {
         const target = await findTargetInWord(context, quoteText);
         if (target && typeof target.insertText === "function") {
-          target.insertText(replacementText, Word.InsertLocation.replace);
+          target.insertText(safeText, Word.InsertLocation.replace);
           target.select();
           await context.sync();
 

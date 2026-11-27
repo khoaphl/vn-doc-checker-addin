@@ -165,6 +165,16 @@ window.PCDT = window.PCDT || {};
               } else {
                 recheckBtn.textContent = "🔄 Kiểm tra lại";
                 recheckBtn.disabled = false;
+                if (card.classList.contains("issue-fixed")) {
+                  card.classList.remove("issue-fixed");
+                  updateGroupCount();
+                }
+                const fixBtnEl = card.querySelector(".btn-fix");
+                if (fixBtnEl && fixBtnEl.textContent.includes("Đã sửa")) {
+                  fixBtnEl.disabled = false;
+                  fixBtnEl.textContent = "✏️ Sửa tự động";
+                  fixBtnEl.style.background = "";
+                }
                 recheckMsg.textContent = `⚠️ Chưa xong: ${res.message}`;
                 recheckMsg.style.color = "#b45309";
                 recheckMsg.style.display = "block";

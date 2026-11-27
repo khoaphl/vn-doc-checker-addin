@@ -62,13 +62,13 @@ window.PCDT = window.PCDT || {};
       .slice(0, 20);
 
     for (const line of headerLines) {
-      if (/^QUYẾT ĐỊNH$/i.test(line)) return "Quyết định";
-      if (/^TỜ TRÌNH$/i.test(line)) return "Tờ trình";
-      if (/^BÁO CÁO$/i.test(line)) return "Báo cáo";
-      if (/^THÔNG BÁO$/i.test(line)) return "Thông báo";
-      if (/^KẾ HOẠCH$/i.test(line)) return "Kế hoạch";
-      if (/^BIÊN BẢN$/i.test(line)) return "Biên bản";
-      if (/^(QUY ĐỊNH|QUY CHẾ)$/i.test(line)) return "Quy định / Quy chế";
+      if (/^QUYẾT ĐỊNH\s*:?$/i.test(line)) return "Quyết định";
+      if (/^TỜ TRÌNH\s*:?$/i.test(line)) return "Tờ trình";
+      if (/^BÁO CÁO\s*:?$/i.test(line)) return "Báo cáo";
+      if (/^THÔNG BÁO\s*:?$/i.test(line)) return "Thông báo";
+      if (/^KẾ HOẠCH\s*:?$/i.test(line)) return "Kế hoạch";
+      if (/^BIÊN BẢN\s*:?$/i.test(line)) return "Biên bản";
+      if (/^(QUY ĐỊNH|QUY CHẾ)\s*:?$/i.test(line)) return "Quy định / Quy chế";
     }
 
     if (headerLines.some((l) => /^V\/v\b/i.test(l))) {
@@ -114,7 +114,7 @@ CHỈ TRẢ VỀ MỘT MẢNG JSON HỢP LỆ theo cấu trúc:
     "quote": "trích dẫn chính xác 1 cụm từ ngắn có chứa lỗi trong văn bản (tối đa 60 ký tự, nằm trên cùng 1 dòng)",
     "issue": "mô tả ngắn gọn lỗi chính tả/đánh máy",
     "suggestion": "đề xuất cách sửa",
-    "replacement": "chuỗi văn bản đúng để thay thế trực tiếp cho trường quote"
+    "replacement": "CHUỖI ĐẦY ĐỦ để thay thế trực tiếp cho TOÀN BỘ trường quote (giữ nguyên các từ đúng xung quanh trong quote, TUYỆT ĐỐI KHÔNG chỉ trả về mỗi từ bị sửa). Ví dụ: nếu quote là 'móng bê tông cốt thép đỗ tại chỗ' thì replacement PHẢI là 'móng bê tông cốt thép đổ tại chỗ' (KHÔNG được chỉ ghi 'đổ')."
   }
 ]
 
@@ -134,7 +134,11 @@ ${documentText}
     const checklists = {
       "Công văn": `
 - Trích yếu (V/v): Phải phản ánh đầy đủ nội dung, viết chữ thường sau "V/v" (trừ danh từ riêng), không lồng tên loại ("V/v thông báo...", "V/v báo cáo...").
-- Số, ký hiệu Công văn: KHÔNG có chữ "CV" trong ký hiệu (VD đúng: Số: 3156/PCĐT-VP).
+- Phân cấp cơ quan ban hành & Số, ký hiệu (theo QĐ 3738/QĐ-PCĐT, 981/QĐ-PCĐT, 3219/QĐ-PCĐT):
+  + Cấp Công ty: Cơ quan chủ quản là "TỔNG CÔNG TY ĐIỆN LỰC MIỀN NAM", đơn vị ban hành là "CÔNG TY ĐIỆN LỰC ĐỒNG THÁP", số ký hiệu là ".../PCĐT-<Mã văn thư>" (VD: /PCĐT-VP, /PCĐT-ĐT), người ký là GIÁM ĐỐC / KT. GIÁM ĐỐC.
+  + Cấp Phòng/Ban nội bộ: Cơ quan chủ quản là "CÔNG TY ĐIỆN LỰC ĐỒNG THÁP", đơn vị ban hành là tên Phòng/Ban, số ký hiệu là ".../<Mã văn thư>" (không có PCĐT-), người ký là TRƯỞNG PHÒNG / CHÁNH VĂN PHÒNG / GIÁM ĐỐC BAN. Bảng mã văn thư chuẩn: TCNS (Phòng TC&NS), KHVT (Phòng KH&VT), TCKT (Phòng TCKT), ĐT (Phòng QLĐT), KT (Phòng Kỹ thuật), KD (Phòng Kinh doanh), AT (Phòng An toàn), ĐĐ (Phòng Điều độ), KTTT (Phòng KT,TT&PC), VTCNTT (Phòng KHCN&CĐS), VP (Văn phòng), QLDA (Ban QLDA).
+  + Cấp Đơn vị trực thuộc: Cơ quan chủ quản là "CÔNG TY ĐIỆN LỰC ĐỒNG THÁP", số ký hiệu theo mã đơn vị (VD: ĐLBP với Điện lực Bình Phú, ĐCL với Cao Lãnh, XNDV với Xí nghiệp Dịch vụ...).
+- Số, ký hiệu Công văn: KHÔNG có chữ "CV" trong ký hiệu (VD đúng: Số: 3156/PCĐT-VP hoặc Số: 123/ĐT).
 - Kính gửi & Nơi nhận: Văn bản gửi ra ngoài Công ty không được ghi lẫn cả đơn vị bên ngoài và đơn vị nội bộ trong cùng mục "Kính gửi" (đơn vị nội bộ chuyển xuống "Nơi nhận"). Nơi nhận có "- Như trên;" nếu phù hợp.
 - Không dùng Công văn để đặt quy tắc bắt buộc chung (quy chế/quy định) hoặc sửa nội dung văn bản khác (chỉ đính chính thể thức/kỹ thuật/căn cứ).
 - Viện dẫn pháp lý: Lần đầu ghi đầy đủ (tên loại, số ký hiệu, ngày... tháng... năm..., cơ quan ban hành, trích yếu); lần sau chỉ ghi tên loại + số ký hiệu. Ngày tháng phải viết đầy đủ "ngày ... tháng ... năm ...".`,
@@ -142,7 +146,11 @@ ${documentText}
 - Phân biệt rõ 2 vị trí chức danh:
   + Vị trí 1 - THẨM QUYỀN BAN HÀNH (nằm ngay dưới trích yếu và TRÊN phần "Căn cứ...", ví dụ: "GIÁM ĐỐC CÔNG TY ĐIỆN LỰC ĐỒNG THÁP"): Đây KHÔNG phải chỗ ký. TUYỆT ĐỐI KHÔNG báo lỗi thiếu "KT."/"TM.", KHÔNG báo lỗi thiếu họ tên và KHÔNG yêu cầu chừa dòng ký tại vị trí này.
   + Vị trí 2 - NGƯỜI KÝ BAN HÀNH (chỉ nằm ở CUỐI văn bản, SAU ký hiệu "./." và ngang hàng mục "Nơi nhận:"): Chỉ kiểm tra quyền hạn ký (GIÁM ĐỐC hoặc KT. GIÁM ĐỐC / PHÓ GIÁM ĐỐC) và họ tên người ký tại vị trí cuối văn bản này. Nếu Giám đốc ký trực tiếp thì ghi "GIÁM ĐỐC" là ĐÚNG.
-- Căn cứ pháp lý đầu tiên: Bắt buộc có Quyết định thành lập/đổi tên Công ty, Quy chế tổ chức và hoạt động, Quy chế phân cấp, sau đó mới đến các căn cứ liên quan khác. LƯU Ý QUAN TRỌNG: "Quyết định số 235/QĐ-EVN ngày 14 tháng 4 năm 2010 của Tập đoàn Điện lực Việt Nam về việc đổi tên các Điện lực trực thuộc Tổng công ty Điện lực miền Nam" CHÍNH LÀ Quyết định thành lập (đổi tên Công ty) hợp lệ — TUYỆT ĐỐI KHÔNG báo lỗi khi văn bản đặt Quyết định này ở căn cứ đầu tiên.
+- Căn cứ pháp lý đầu tiên (bắt buộc theo Công văn 9975/PCĐT-VP): Phải đặt 3 căn cứ sau lên ĐẦU TIÊN theo đúng thứ tự, rồi mới đến các căn cứ pháp lý khác:
+  (1) "Căn cứ Quyết định số 235/QĐ-EVN ngày 14 tháng 4 năm 2010 của Tập đoàn Điện lực Việt Nam về việc đổi tên các Điện lực trực thuộc Tổng công ty Điện lực miền Nam;"
+  (2) "Căn cứ Quyết định số 201/QĐ-HĐTV ngày 05 tháng 8 năm 2025 của Hội đồng thành viên Tổng công ty Điện lực miền Nam về việc ban hành Quy chế tổ chức và hoạt động của Công ty Điện lực Đồng Tháp;"
+  (3) "Căn cứ Quyết định số 1677/QĐ-EVNSPC ngày 01 tháng 6 năm 2025 của Tổng công ty Điện lực miền Nam về việc ban hành Quy chế phân cấp quản lý giữa Tổng Giám đốc và Giám đốc các đơn vị trực thuộc trong Tổng công ty Điện lực miền Nam và Quyết định số 1824/QĐ-EVNSPC ngày 17 tháng 6 năm 2025 của Tổng công ty Điện lực miền Nam về việc sửa đổi, bổ sung một số nội dung trong “Quy chế phân cấp thẩm quyền quản lý giữa Tổng Giám đốc và Giám đốc đơn vị trực thuộc trong Tổng công ty Điện lực miền Nam” được ban hành theo Quyết định số 1677/QĐ-EVNSPC ngày 01/06/2025;"
+  LƯU Ý: TUYỆT ĐỐI KHÔNG báo lỗi khi văn bản đã viện dẫn đúng 3 căn cứ này ở đầu phần Căn cứ. Chỉ báo lỗi nếu thiếu hoặc đặt sau các căn cứ khác.
 - Định dạng căn cứ: mỗi dòng kết thúc bằng ";", căn cứ cuối kết thúc bằng "." (hoặc ";" nếu tiếp theo là "Theo đề nghị của..." và dòng đó kết thúc bằng "."). Không dùng "Xét đề nghị của..." theo mẫu 1.2/1.3 NĐ 30.
 - Điều khoản thi hành: Phải có Điều về hiệu lực thi hành và Điều về trách nhiệm thi hành; phần Nơi nhận có "- Như Điều ...;". Không thêm "Xin trân trọng cảm ơn./." ở cuối Quyết định.
 - Viện dẫn Luật/Pháp lệnh: Không ghi số, ký hiệu, cơ quan ban hành.`,
