@@ -63,7 +63,7 @@ window.PCDT = window.PCDT || {};
         const sections = context.document.sections;
 
         paragraphs.load(
-          "items/text, items/font/name, items/font/size, items/font/color, items/alignment, items/firstLineIndent, items/spaceAfter, items/spaceBefore, items/lineSpacing, items/parentTableOrNullObject/isNullObject"
+          "items/text, items/font/name, items/font/size, items/font/color, items/alignment, items/firstLineIndent, items/leftIndent, items/isListItem, items/spaceAfter, items/spaceBefore, items/lineSpacing, items/parentTableOrNullObject/isNullObject"
         );
 
         const supportsPageSetup = Office.context.requirements.isSetSupported("WordApi", "1.5");
@@ -146,9 +146,12 @@ window.PCDT = window.PCDT || {};
               wrongAlignCount++;
             }
             // Thụt đầu dòng chuẩn 1cm (~28.35pt) hoặc 1.27cm (~36pt), dung sai ±2.5pt
-            const indent = p.firstLineIndent || 0;
-            const ok1cm = Math.abs(indent - 28.35) <= 2.5;
-            const ok127cm = Math.abs(indent - 36.0) <= 2.5;
+            // Với đoạn có Bullets/Numbering (isListItem), vị trí đầu dòng là (leftIndent + firstLineIndent)
+            const effectiveIndent = p.isListItem
+              ? (p.leftIndent || 0) + (p.firstLineIndent || 0)
+              : (p.firstLineIndent || 0);
+            const ok1cm = Math.abs(effectiveIndent - 28.35) <= 2.5;
+            const ok127cm = Math.abs(effectiveIndent - 36.0) <= 2.5;
             if (!ok1cm && !ok127cm) {
               wrongIndentCount++;
             }
@@ -294,7 +297,7 @@ window.PCDT = window.PCDT || {};
           await context.sync();
 
           paragraphs.items.forEach((p) => {
-            p.load("text, alignment, parentTableOrNullObject/isNullObject");
+            p.load("text, alignment, isListItem, parentTableOrNullObject/isNullObject");
           });
           await context.sync();
 
@@ -314,7 +317,15 @@ window.PCDT = window.PCDT || {};
               p.alignment = Word.Alignment.justified;
             }
             if (checkedIds.includes("fmt_indent")) {
-              p.firstLineIndent = PCDT.cmToPt(cfg.indent);
+              const targetIndentPt = PCDT.cmToPt(cfg.indent);
+              if (p.isListItem) {
+                // Đoạn có Bullets/Numbering dùng leftIndent + hanging (-18pt) để dấu đầu dòng nằm đúng vị trí 1cm/1.27cm
+                const hangingPt = 18;
+                p.leftIndent = targetIndentPt + hangingPt;
+                p.firstLineIndent = -hangingPt;
+              } else {
+                p.firstLineIndent = targetIndentPt;
+              }
             }
             if (checkedIds.includes("fmt_spacing")) {
               p.spaceBefore = cfg.spaceBeforeAfter;
